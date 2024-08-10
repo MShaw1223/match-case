@@ -15,7 +15,16 @@ impl Choices {
     }
 }
 
+fn numbers(n: i8) {
+    match n {
+        2 | 4 | 6 | 8 | 10 => println!("{} is even", n),
+        1 | 3 | 5 | 7 | 9 => println!("{} is odd", n),
+        _ => println!("{} falls out of the bounds of 1-10", n),
+    }
+}
+
 fn main() {
+    println!("Welcome !!");
     loop {
         let mut input = String::new();
         println!(
@@ -34,7 +43,16 @@ fn main() {
                 break;
             }
             Some(Choices::CONT) => {
-                println!("In the loop \n");
+                let mut number = String::new();
+                println!("Enter a number from 1-10:");
+                io::stdin()
+                    .read_line(&mut number)
+                    .expect("Failed to read input");
+                let formatted = number.trim().parse::<i8>();
+                match formatted {
+                    Ok(f) => numbers(f),
+                    Err(e) => println!("Error parsing: {}", e),
+                }
             }
             None => {
                 println!("{} does not satisfy options 'e' or 'c'", input.trim());
